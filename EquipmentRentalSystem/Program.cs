@@ -2,7 +2,8 @@
 {
     static void Main()
     {
-        while (true)
+        bool cliStatus = true;
+        while (cliStatus)
         {
             Console.WriteLine("---- Equipment Rental System ----");
             Console.WriteLine("1. Add new user to the system");
@@ -20,6 +21,46 @@
             
             Console.WriteLine("Choose an option:");
             var input =  Console.ReadLine();
+            
+            switch (input) 
+            {
+                case "1":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "2":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "3":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "4":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "5":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "6":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "7":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "8":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "9":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "10":
+                    Console.WriteLine("not working yet");
+                    break;
+                case "11":
+                    cliStatus = false;
+                    break;
+                default:
+                    Console.WriteLine("invalid option. Input just a number");
+                    break;
+            }
         } 
     }
 
