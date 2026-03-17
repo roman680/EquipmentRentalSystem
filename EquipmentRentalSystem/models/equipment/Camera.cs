@@ -1,6 +1,6 @@
 namespace EquipmentRentalSystem.models.equipment;
 
-public class Camera
+public class Camera : Equipment
 {
     
 }

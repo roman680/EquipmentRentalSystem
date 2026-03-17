@@ -1,6 +1,6 @@
 namespace EquipmentRentalSystem.models.equipment;
 
-public class Projector
+public class Projector : Equipment
 {
     
 }

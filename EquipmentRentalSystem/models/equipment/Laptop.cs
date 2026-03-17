@@ -1,6 +1,6 @@
 namespace EquipmentRentalSystem.models.equipment;
 
-public class Laptop
+public class Laptop : Equipment
 {
     
 }
