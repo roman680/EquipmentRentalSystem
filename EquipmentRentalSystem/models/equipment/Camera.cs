@@ -7,4 +7,10 @@ public class Camera : Equipment
 {
     Processor processor {get; set;}
     public Resolution resolution {get; set;}
+
+    public Camera(Processor processor, Resolution resolution)
+    {
+        this.processor = processor;
+        this.resolution = resolution;
+    }
 }
