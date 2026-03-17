@@ -6,4 +6,5 @@ public class Equipment
     public string name { get; set; }
     public bool isAvaliable { get; set; }
     public string description { get; set; }
+    public string manufacturer { get; set; }
 }
