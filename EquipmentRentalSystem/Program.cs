@@ -20,7 +20,7 @@
             Console.WriteLine("---------------------------------");
             
             Console.WriteLine("Choose an option:");
-            var input =  Console.ReadLine();
+            string input =  Console.ReadLine();
             
             switch (input) 
             {
