@@ -5,11 +5,11 @@ namespace EquipmentRentalSystem.service;
 
 public class UserServiceImpl : IUserService
 {
-    IUserRepository _userRepository;
+    private readonly IUserRepository userRepository;
     
     public UserServiceImpl(IUserRepository userRepository)
     {
-        _userRepository = userRepository;
+        this.userRepository = userRepository;
     }
     
     public User addUser(User user)
@@ -20,22 +20,22 @@ public class UserServiceImpl : IUserService
             return null;
         }
 
-        if (_userRepository.getUser(user.id) != null)
+        if (userRepository.getUser(user.id) != null)
         {
             Console.WriteLine("User already exists with given ID: " + user.id);
             return null;
         }
         
-        return _userRepository.addUser(user);
+        return userRepository.addUser(user);
     }
 
     public User getUser(long userId)
     {
-        return _userRepository.getUser(userId);
+        return userRepository.getUser(userId);
     }
 
     public IEnumerable<User> getUsers()
     {
-        return _userRepository.getUsers();
+        return userRepository.getUsers();
     }
 }
