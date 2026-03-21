@@ -6,6 +6,8 @@ public abstract class User
     public string name { get; set; }
     public string lastName { get; set; }
 
+    public abstract int getMaxRentals();
+
     public User(string name, string lastName)
     {
         this.name = name;
