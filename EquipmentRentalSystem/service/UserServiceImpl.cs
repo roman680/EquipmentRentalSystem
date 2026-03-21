@@ -29,7 +29,7 @@ public class UserServiceImpl : IUserService
         return userRepository.addUser(user);
     }
 
-    public User getUser(long userId)
+    public User getUser(Guid userId)
     {
         return userRepository.getUser(userId);
     }

@@ -5,6 +5,6 @@ namespace EquipmentRentalSystem.service;
 public interface IUserService
 {
     User addUser(User user);
-    User getUser(long userId);
+    User getUser(Guid userId);
     IEnumerable<User> getUsers();
 }

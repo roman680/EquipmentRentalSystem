@@ -4,7 +4,7 @@ namespace EquipmentRentalSystem.repository;
 
 public class EqupmentRepositoryImpl : IEquipmentRepository
 {
-    private Dictionary<long, Equipment> equipments = new Dictionary<long, Equipment>();
+    private Dictionary<Guid, Equipment> equipments = new Dictionary<Guid, Equipment>();
     
     public Equipment addEquipment(Equipment equipment)
     {
@@ -17,7 +17,7 @@ public class EqupmentRepositoryImpl : IEquipmentRepository
         return equipments.Values;
     }
 
-    public Equipment getEquipmentById(long equipmentId)
+    public Equipment getEquipmentById(Guid equipmentId)
     {
         if (equipments.TryGetValue(equipmentId, out var equipment))
         {

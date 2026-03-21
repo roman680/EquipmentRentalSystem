@@ -36,7 +36,7 @@ public class EquipmentServiceImpl : IEquipmentService
         return equipmentRepository.getEquipments();
     }
 
-    public Equipment getEquipmentsById(long equipmentId)
+    public Equipment getEquipmentsById(Guid equipmentId)
     {
         return equipmentRepository.getEquipmentById(equipmentId);
     }

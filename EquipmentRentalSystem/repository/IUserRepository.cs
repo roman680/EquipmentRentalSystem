@@ -5,6 +5,6 @@ namespace EquipmentRentalSystem.repository;
 public interface IUserRepository
 {
     User addUser(User user);
-    User getUser(long userId);
+    User getUser(Guid userId);
     IEnumerable<User> getUsers();
 }

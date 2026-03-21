@@ -4,7 +4,7 @@ namespace EquipmentRentalSystem.repository;
 
 public class UserRepositoryImpl : IUserRepository
 {
-    Dictionary<long, User> users = new Dictionary<long, User>();
+    Dictionary<Guid, User> users = new Dictionary<Guid, User>();
     
     public User addUser(User user)
     {
@@ -12,7 +12,7 @@ public class UserRepositoryImpl : IUserRepository
         return user;
     }
 
-    public User getUser(long userId)
+    public User getUser(Guid userId)
     {
         if (users.TryGetValue(userId, out var user))
         {

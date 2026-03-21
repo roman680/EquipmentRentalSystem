@@ -2,6 +2,6 @@
 
 public class Employee : User
 {
-    public Employee(long id, string firstName, string lastName) 
-        : base(id, firstName, lastName) {}
+    public Employee(string firstName, string lastName) 
+        : base(firstName, lastName) {}
 }

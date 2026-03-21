@@ -7,5 +7,5 @@ public interface IEquipmentService
 {
     Equipment addEquipment(Equipment equipment);
     IEnumerable<Equipment> getEquipments();
-    Equipment getEquipmentsById(long equipmentId);
+    Equipment getEquipmentsById(Guid equipmentId);
 }

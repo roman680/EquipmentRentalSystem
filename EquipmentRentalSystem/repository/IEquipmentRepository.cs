@@ -6,5 +6,5 @@ public interface IEquipmentRepository
 {
     Equipment addEquipment(Equipment equipment);
     IEnumerable<Equipment> getEquipments();
-    Equipment getEquipmentById(long equipmentId);
+    Equipment getEquipmentById(Guid equipmentId);
 }
