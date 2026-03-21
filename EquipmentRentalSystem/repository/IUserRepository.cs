@@ -6,5 +6,5 @@ public interface IUserRepository
 {
     User addUser(User user);
     User getUser(Guid userId);
-    IEnumerable<User> getUsers();
+    IEnumerable<User> getAllUsers();
 }

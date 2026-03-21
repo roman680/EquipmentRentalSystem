@@ -34,8 +34,8 @@ public class UserServiceImpl : IUserService
         return userRepository.getUser(userId);
     }
 
-    public IEnumerable<User> getUsers()
+    public IEnumerable<User> getAllUsers()
     {
-        return userRepository.getUsers();
+        return userRepository.getAllUsers();
     }
 }

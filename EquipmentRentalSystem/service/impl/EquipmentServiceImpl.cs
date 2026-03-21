@@ -31,13 +31,25 @@ public class EquipmentServiceImpl : IEquipmentService
         return equipmentRepository.addEquipment(equipment);
     }
 
-    public IEnumerable<Equipment> getEquipments()
+    public IEnumerable<Equipment> getAllEquipment()
     {
-        return equipmentRepository.getEquipments();
+        return equipmentRepository.getAllEquipment();
     }
 
     public Equipment getEquipmentsById(Guid equipmentId)
     {
         return equipmentRepository.getEquipmentById(equipmentId);
+    }
+    public IEnumerable<Equipment> getAvailibleEquipment()
+    {
+        var equipments = equipmentRepository.getAllEquipment();
+        return equipments.Where(e => e.isAvaliable);
+    }
+
+    public Equipment markUnAvailibleEquipment(Guid equipmentId)
+    {
+        Equipment fromdb = equipmentRepository.getEquipmentById(equipmentId);
+        fromdb.isAvaliable = false;
+        return fromdb;
     }
 }

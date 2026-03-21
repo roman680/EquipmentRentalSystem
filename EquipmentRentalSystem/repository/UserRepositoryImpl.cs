@@ -22,7 +22,7 @@ public class UserRepositoryImpl : IUserRepository
         return null;
     }
 
-    public IEnumerable<User> getUsers()
+    public IEnumerable<User> getAllUsers()
     {
         return users.Values;
     }

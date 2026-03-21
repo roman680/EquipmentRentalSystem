@@ -6,5 +6,5 @@ public interface IUserService
 {
     User addUser(User user);
     User getUserById(Guid userId);
-    IEnumerable<User> getUsers();
+    IEnumerable<User> getAllUsers();
 }

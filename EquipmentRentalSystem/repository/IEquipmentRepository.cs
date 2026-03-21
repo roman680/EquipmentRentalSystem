@@ -5,6 +5,6 @@ namespace EquipmentRentalSystem.repository;
 public interface IEquipmentRepository
 {
     Equipment addEquipment(Equipment equipment);
-    IEnumerable<Equipment> getEquipments();
+    IEnumerable<Equipment> getAllEquipment();
     Equipment getEquipmentById(Guid equipmentId);
 }

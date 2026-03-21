@@ -12,7 +12,7 @@ public class EqupmentRepositoryImpl : IEquipmentRepository
         return equipment;
     }
 
-    public IEnumerable<Equipment> getEquipments()
+    public IEnumerable<Equipment> getAllEquipment()
     {
         return equipments.Values;
     }
