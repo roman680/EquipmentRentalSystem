@@ -3,7 +3,7 @@ using EquipmentRentalSystem.models.users;
 
 namespace EquipmentRentalSystem.service;
 
-public class RentPolicyServiceImpl
+public class RentPolicyServiceImpl : IRentPolicyService
 {
     private const int ONE_OVERDUE_DAY_FEE = 5;
     

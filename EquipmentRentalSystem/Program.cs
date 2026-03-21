@@ -1,67 +1,58 @@
-﻿class Program
+﻿using EquipmentRentalSystem;
+using EquipmentRentalSystem.repository;
+using EquipmentRentalSystem.service;
+
+class Program
 {
     static void Main()
     {
+        var userRepo = new UserRepositoryImpl();
+        var equipmentRepo = new EquipmentRepositoryImpl();
+        var rentRepo = new RentalRepositoryImpl();
+        
+        var policyService = new RentPolicyServiceImpl();
+        var userService = new UserServiceImpl(userRepo);
+        var equipmentService = new EquipmentServiceImpl(equipmentRepo);
+        var rentService = new RentServiceImpl(userService, equipmentService, rentRepo, policyService);
+
+        // ---------- UI ----------
+        var menu = new MenuHandler(userService, equipmentService, rentService);
+
+        // ---------- CLI LOOP ----------
         bool cliStatus = true;
+
         while (cliStatus)
         {
-            Console.WriteLine("---- Equipment Rental System ----");
-            Console.WriteLine("1. Add new user to the system");
-            Console.WriteLine("2. Add new Equipment item of selected type");
-            Console.WriteLine("3. Display equipment list with current status");
-            Console.WriteLine("4. Display available for rental equipment");
-            Console.WriteLine("5. Rent Equipment");
-            Console.WriteLine("6. Return equipment(possible penalty)");
-            Console.WriteLine("7. Mark equpment as anavalible (for example damage)");
-            Console.WriteLine("8. Display active rental for a selected user");
-            Console.WriteLine("9. Display list of overdue rentals");
-            Console.WriteLine("10. Generate Report of rental Service state");  
-            Console.WriteLine("11. Exit");
-            Console.WriteLine("---------------------------------");
-            
+            PrintMenu();
+
             Console.WriteLine("Choose an option:");
             string input = Console.ReadLine();
-            
-            switch (input) 
+
+            if (input == "11")
             {
-                case "1":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "2":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "3":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "4":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "5":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "6":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "7":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "8":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "9":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "10":
-                    Console.WriteLine("not working yet");
-                    break;
-                case "11":
-                    cliStatus = false;
-                    break;
-                default:
-                    Console.WriteLine("invalid option. Input just a number");
-                    break;
+                cliStatus = false;
+                Console.WriteLine("Exiting...");
+                continue;
             }
-        } 
+
+            menu.Handle(input);
+        }
     }
 
+    private static void PrintMenu()
+    {
+        Console.WriteLine("\n---- Equipment Rental System ----");
+        Console.WriteLine("1. Add new user to the system");
+        Console.WriteLine("2. Add new Equipment item of selected type");
+        Console.WriteLine("3. Display equipment list with current status");
+        Console.WriteLine("4. Display available for rental equipment");
+        Console.WriteLine("5. Rent Equipment");
+        Console.WriteLine("6. Return equipment (possible penalty)");
+        Console.WriteLine("7. Mark equipment as unavailable");
+        Console.WriteLine("8. Display active rentals for a selected user");
+        Console.WriteLine("9. Display list of overdue rentals");
+        Console.WriteLine("10. Generate report of rental service state");
+        Console.WriteLine("11. Exit");
+        Console.WriteLine("---------------------------------\n");
+    }
 }

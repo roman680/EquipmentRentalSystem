@@ -1,4 +1,5 @@
-﻿using EquipmentRentalSystem.models;
+﻿using EquipmentRentalSystem.enums;
+using EquipmentRentalSystem.models;
 using EquipmentRentalSystem.models.equipment;
 using EquipmentRentalSystem.models.users;
 using EquipmentRentalSystem.models.utils;
@@ -81,31 +82,33 @@ public class MenuHandler
 
     private void AddEquipment()
     {
-        Console.WriteLine("Choose type: 1 - Laptop");
+        Console.WriteLine("Choose equipment type:");
+        Console.WriteLine("1 - Laptop");
+        Console.WriteLine("2 - Camera");
+        Console.WriteLine("3 - Projector");
 
         var type = Console.ReadLine();
 
         Console.WriteLine("Enter name:");
         var name = Console.ReadLine();
 
-        if (type == "1")
+        try
         {
-            Console.WriteLine("Processor name:");
-            var procName = Console.ReadLine();
+            Equipment equipment = type switch
+            {
+                "1" => CreateLaptop(name),
+                "2" => CreateCamera(name),
+                "3" => CreateProjector(name),
+                _ => throw new Exception("Invalid equipment type")
+            };
 
-            Console.WriteLine("Cores:");
-            int cores = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("RAM:");
-            int ram = int.Parse(Console.ReadLine());
-
-            var processor = new Processor(cores, procName);
-            var laptop = new Laptop(processor, ram);
-
-            _equipmentService.addEquipment(laptop);
+            _equipmentService.addEquipment(equipment);
+            Console.WriteLine("Equipment added successfully");
         }
-
-        Console.WriteLine("Equipment added");
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private Guid SelectEquipment(bool onlyAvailable = true)
@@ -251,5 +254,78 @@ public class MenuHandler
         Console.WriteLine($"Total rentals: {all.Count()}");
         Console.WriteLine($"Active rentals: {active}");
         Console.WriteLine($"Overdue rentals: {overdue}");
+    }
+    
+    private Laptop CreateLaptop(string name)
+    {
+        Console.WriteLine("Processor name:");
+        var procName = Console.ReadLine();
+
+        Console.WriteLine("Number of cores:");
+        int cores = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("RAM (GB):");
+        int ram = int.Parse(Console.ReadLine());
+
+        var processor = new Processor(cores, procName);
+
+        var laptop = new Laptop(processor, ram)
+        {
+            name = name
+        };
+
+        return laptop;
+    }
+    
+    private Camera CreateCamera(string name)
+    {
+        Console.WriteLine("Processor name:");
+        var procName = Console.ReadLine();
+
+        Console.WriteLine("Number of cores:");
+        int cores = int.Parse(Console.ReadLine());
+
+        var processor = new Processor(cores, procName);
+
+        Console.WriteLine("Resolution (1 - HD, 2 - FullHD, 3 - UltraHD):");
+        var resInput = Console.ReadLine();
+
+        var resolution = ParseResolution(resInput);
+
+        var camera = new Camera(processor, resolution)
+        {
+            name = name
+        };
+
+        return camera;
+    }
+    
+    private Projector CreateProjector(string name)
+    {
+        Console.WriteLine("Resolution (1 - HD, 2 - FullHD, 3 - UltraHD):");
+        var resInput = Console.ReadLine();
+
+        var resolution = ParseResolution(resInput);
+
+        Console.WriteLine("Number of optical lenses:");
+        int lenses = int.Parse(Console.ReadLine());
+
+        var projector = new Projector(resolution, lenses)
+        {
+            name = name
+        };
+
+        return projector;
+    }
+    
+    private Resolution ParseResolution(string input)
+    {
+        return input switch
+        {
+            "1" => Resolution.HD,
+            "2" => Resolution.FullHD,
+            "3" => Resolution.UltraHD,
+            _ => throw new Exception("Invalid resolution")
+        };
     }
 }

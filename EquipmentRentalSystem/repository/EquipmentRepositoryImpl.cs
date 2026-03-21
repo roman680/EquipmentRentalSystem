@@ -2,7 +2,7 @@
 
 namespace EquipmentRentalSystem.repository;
 
-public class EqupmentRepositoryImpl : IEquipmentRepository
+public class EquipmentRepositoryImpl : IEquipmentRepository
 {
     private Dictionary<Guid, Equipment> equipments = new Dictionary<Guid, Equipment>();
     
