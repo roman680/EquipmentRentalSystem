@@ -1,4 +1,4 @@
-namespace EquipmentRentalSystem.models.utils;
+﻿namespace EquipmentRentalSystem.models.utils;
 
 public class Processor
 {

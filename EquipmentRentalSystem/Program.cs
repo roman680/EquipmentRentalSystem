@@ -1,32 +1,39 @@
-﻿using EquipmentRentalSystem;
 using EquipmentRentalSystem.repository;
 using EquipmentRentalSystem.service;
 
-class Program
+namespace EquipmentRentalSystem;
+
+public class Program
 {
-    static void Main()
+    public static void Main(string[]? args)
     {
         var userRepo = new UserRepositoryImpl();
         var equipmentRepo = new EquipmentRepositoryImpl();
         var rentRepo = new RentalRepositoryImpl();
-        
+
         var policyService = new RentPolicyServiceImpl();
         var userService = new UserServiceImpl(userRepo);
         var equipmentService = new EquipmentServiceImpl(equipmentRepo);
         var rentService = new RentServiceImpl(userService, equipmentService, rentRepo, policyService);
-        
-        var menu = new MenuHandler(userService, equipmentService, rentService);
-        
-        bool cliStatus = true;
+        var storageService = new StorageServiceImpl(userRepo, equipmentRepo, rentRepo);
+
+        var menu = new MenuHandler(userService, equipmentService, rentService, storageService);
+
+        if (args != null && args.Any(arg => arg.Equals("demo", StringComparison.OrdinalIgnoreCase)))
+        {
+            menu.Demonstrate();
+            return;
+        }
+
+        var cliStatus = true;
 
         while (cliStatus)
         {
             PrintMenu();
-
             Console.WriteLine("Choose an option:");
-            string input = Console.ReadLine();
+            var input = Console.ReadLine();
 
-            if (input == "11")
+            if (input == "13")
             {
                 cliStatus = false;
                 Console.WriteLine("Exiting...");
@@ -50,7 +57,9 @@ class Program
         Console.WriteLine("8. Display active rentals for a selected user");
         Console.WriteLine("9. Display list of overdue rentals");
         Console.WriteLine("10. Generate report of rental service state");
-        Console.WriteLine("11. Exit");
+        Console.WriteLine("11. Save to JSON / Load from JSON");
+        Console.WriteLine("12. Demonstrate");
+        Console.WriteLine("13. Exit");
         Console.WriteLine("---------------------------------\n");
     }
 }

@@ -1,4 +1,4 @@
-namespace EquipmentRentalSystem.enums;
+﻿namespace EquipmentRentalSystem.enums;
 
 public enum Resolution
 {

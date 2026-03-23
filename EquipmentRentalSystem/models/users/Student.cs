@@ -1,10 +1,13 @@
-﻿namespace EquipmentRentalSystem.models.users;
+﻿﻿namespace EquipmentRentalSystem.models.users;
 
 public class Student : User
 {
     private const int MAX_RENTS = 2;
     public Student(string firstName, string lastName) 
-        : base(firstName, lastName) {}
+        : base(firstName, lastName)
+    {
+        userType = "Student";
+    }
 
     public override int getMaxRentals()
     {
