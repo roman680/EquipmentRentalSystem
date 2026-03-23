@@ -14,11 +14,9 @@ class Program
         var userService = new UserServiceImpl(userRepo);
         var equipmentService = new EquipmentServiceImpl(equipmentRepo);
         var rentService = new RentServiceImpl(userService, equipmentService, rentRepo, policyService);
-
-        // ---------- UI ----------
+        
         var menu = new MenuHandler(userService, equipmentService, rentService);
-
-        // ---------- CLI LOOP ----------
+        
         bool cliStatus = true;
 
         while (cliStatus)
