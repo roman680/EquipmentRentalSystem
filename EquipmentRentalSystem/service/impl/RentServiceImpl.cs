@@ -1,11 +1,11 @@
-﻿using EquipmentRentalSystem.models;
+using EquipmentRentalSystem.models;
 using EquipmentRentalSystem.repository;
 
 namespace EquipmentRentalSystem.service;
 
 public class RentServiceImpl : IRentService
 {
-  private readonly IUserService userService;
+    private readonly IUserService userService;
     private readonly IEquipmentService equipmentService;
     private readonly IRentalRepository rentRepository;
     private readonly IRentPolicyService policyService;
@@ -14,8 +14,7 @@ public class RentServiceImpl : IRentService
         IUserService userService,
         IEquipmentService equipmentService,
         IRentalRepository rentRepository,
-        IRentPolicyService policyService
-        )
+        IRentPolicyService policyService)
     {
         this.userService = userService;
         this.equipmentService = equipmentService;
@@ -25,6 +24,16 @@ public class RentServiceImpl : IRentService
 
     public Rent RentEquipment(Guid userId, Guid equipmentId, int days)
     {
+        return RentEquipment(userId, equipmentId, days, DateTime.Now);
+    }
+
+    public Rent RentEquipment(Guid userId, Guid equipmentId, int days, DateTime rentDate)
+    {
+        if (days <= 0)
+        {
+            throw new Exception("Rental days must be greater than zero");
+        }
+
         var user = userService.getUserById(userId)
             ?? throw new Exception("User not found");
 
@@ -32,15 +41,19 @@ public class RentServiceImpl : IRentService
             ?? throw new Exception("Equipment not found");
 
         if (!equipment.isAvaliable)
+        {
             throw new Exception("Equipment is not available");
+        }
 
         var activeRents = rentRepository.getAllRents()
             .Count(r => r.userId == userId && r.returnDate == null);
 
         if (!policyService.CanUserRent(user, activeRents))
+        {
             throw new Exception("User rental limit exceeded");
+        }
 
-        var rent = new Rent(DateTime.Now, userId, equipmentId, days);
+        var rent = new Rent(rentDate, userId, equipmentId, days);
 
         rentRepository.addRent(rent);
         equipment.isAvaliable = false;
@@ -50,18 +63,31 @@ public class RentServiceImpl : IRentService
 
     public decimal ReturnEquipment(Guid rentId)
     {
+        return ReturnEquipment(rentId, DateTime.Now);
+    }
+
+    public decimal ReturnEquipment(Guid rentId, DateTime returnDate)
+    {
         var rent = rentRepository.getRentById(rentId)
             ?? throw new Exception("Rent not found");
 
         if (rent.returnDate != null)
+        {
             throw new Exception("Already returned");
+        }
 
-        rent.Return(DateTime.Now);
+        var penalty = returnDate <= rent.DueDate
+            ? 0
+            : (returnDate.Date - rent.DueDate.Date).Days * policyService.GetOneOverdueDayFee();
 
-        var equipment = equipmentService.getEquipmentsById(rent.equipmentId);
+        rent.Return(returnDate, penalty);
+
+        var equipment = equipmentService.getEquipmentsById(rent.equipmentId)
+            ?? throw new Exception("Equipment not found");
+
         equipment.isAvaliable = true;
 
-        return policyService.CalculatePenalty(rent);
+        return rent.penaltyFee;
     }
 
     public IEnumerable<Rent> GetActiveRentalsByUser(Guid userId)
@@ -81,5 +107,8 @@ public class RentServiceImpl : IRentService
         return rentRepository.getAllRents();
     }
 
-
+    public IEnumerable<Rent> GetRentalsByUser(Guid userId)
+    {
+        return rentRepository.getRentByUserId(userId);
+    }
 }

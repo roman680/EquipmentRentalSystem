@@ -1,4 +1,4 @@
-﻿using EquipmentRentalSystem.models;
+﻿﻿using EquipmentRentalSystem.models;
 
 namespace EquipmentRentalSystem.repository;
 
@@ -12,7 +12,7 @@ public class RentalRepositoryImpl : IRentalRepository
         return rental;
     }
 
-    public Rent getRentById(Guid rentalId)
+    public Rent? getRentById(Guid rentalId)
     {
         return rents.FirstOrDefault(r => r.id == rentalId);
     }
@@ -30,5 +30,11 @@ public class RentalRepositoryImpl : IRentalRepository
     public IEnumerable<Rent> getRentByUserId(Guid userId)
     {
         return rents.Where(r => r.userId == userId);
+    }
+
+    public void replaceAllRents(IEnumerable<Rent> rents)
+    {
+        this.rents.Clear();
+        this.rents.AddRange(rents);
     }
 }

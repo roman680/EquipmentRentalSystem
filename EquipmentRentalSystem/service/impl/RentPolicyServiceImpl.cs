@@ -1,4 +1,4 @@
-﻿using EquipmentRentalSystem.models;
+﻿﻿using EquipmentRentalSystem.models;
 using EquipmentRentalSystem.models.users;
 
 namespace EquipmentRentalSystem.service;
@@ -19,5 +19,10 @@ public class RentPolicyServiceImpl : IRentPolicyService
 
         var daysLate = (rental.returnDate.Value - rental.DueDate).Days;
         return daysLate * ONE_OVERDUE_DAY_FEE; 
+    }
+
+    public decimal GetOneOverdueDayFee()
+    {
+        return ONE_OVERDUE_DAY_FEE;
     }
 }

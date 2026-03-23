@@ -1,4 +1,4 @@
-﻿using EquipmentRentalSystem.models.equipment;
+﻿﻿using EquipmentRentalSystem.models.equipment;
 using EquipmentRentalSystem.repository;
 
 namespace EquipmentRentalSystem.service;
@@ -18,14 +18,12 @@ public class EquipmentServiceImpl : IEquipmentService
     {
         if (equipment == null)
         {
-            Console.WriteLine("User is null");
-            return null;
+            throw new Exception("Equipment is null");
         }
 
         if (equipmentRepository.getEquipmentById(equipment.id) != null)
         {
-            Console.WriteLine("Equipment already exists with given ID: " + equipment.id);
-            return null;
+            throw new Exception("Equipment already exists with given ID: " + equipment.id);
         }
         
         return equipmentRepository.addEquipment(equipment);
@@ -36,7 +34,7 @@ public class EquipmentServiceImpl : IEquipmentService
         return equipmentRepository.getAllEquipment();
     }
 
-    public Equipment getEquipmentsById(Guid equipmentId)
+    public Equipment? getEquipmentsById(Guid equipmentId)
     {
         return equipmentRepository.getEquipmentById(equipmentId);
     }
@@ -48,7 +46,14 @@ public class EquipmentServiceImpl : IEquipmentService
 
     public Equipment markUnAvailibleEquipment(Guid equipmentId)
     {
-        Equipment fromdb = equipmentRepository.getEquipmentById(equipmentId);
+        Equipment fromdb = equipmentRepository.getEquipmentById(equipmentId)
+                           ?? throw new Exception("Equipment not found");
+
+        if (!fromdb.isAvaliable)
+        {
+            throw new Exception("Equipment is already unavailable");
+        }
+
         fromdb.isAvaliable = false;
         return fromdb;
     }

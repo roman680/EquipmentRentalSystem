@@ -1,4 +1,4 @@
-﻿using EquipmentRentalSystem.models.users;
+﻿﻿using EquipmentRentalSystem.models.users;
 using EquipmentRentalSystem.repository;
 
 namespace EquipmentRentalSystem.service;
@@ -16,20 +16,18 @@ public class UserServiceImpl : IUserService
     {
         if (user == null)
         {
-            Console.WriteLine("User is null");
-            return null;
+            throw new Exception("User is null");
         }
 
         if (userRepository.getUser(user.id) != null)
         {
-            Console.WriteLine("User already exists with given ID: " + user.id);
-            return null;
+            throw new Exception("User already exists with given ID: " + user.id);
         }
         
         return userRepository.addUser(user);
     }
 
-    public User getUserById(Guid userId)
+    public User? getUserById(Guid userId)
     {
         return userRepository.getUser(userId);
     }

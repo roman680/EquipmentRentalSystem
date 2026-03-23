@@ -1,4 +1,4 @@
-﻿using EquipmentRentalSystem.models.equipment;
+﻿﻿using EquipmentRentalSystem.models.equipment;
 
 namespace EquipmentRentalSystem.repository;
 
@@ -17,13 +17,17 @@ public class EquipmentRepositoryImpl : IEquipmentRepository
         return equipments.Values;
     }
 
-    public Equipment getEquipmentById(Guid equipmentId)
+    public Equipment? getEquipmentById(Guid equipmentId)
     {
         if (equipments.TryGetValue(equipmentId, out var equipment))
         {
             return equipment;
         }
-        Console.WriteLine("User not found");
         return null;
+    }
+
+    public void replaceAllEquipment(IEnumerable<Equipment> equipments)
+    {
+        this.equipments = equipments.ToDictionary(equipment => equipment.id, equipment => equipment);
     }
 }
